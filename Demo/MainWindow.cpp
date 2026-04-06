@@ -2,7 +2,7 @@
 #include "ui_MainWindow.h"
 #include "mydialog.h"
 #include <QMessageBox>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QInputDialog>
 
 #include "QtnProperty/QObjectPropertySet.h"
@@ -41,7 +41,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 	dbg.attachTo(&jsEngine);
 
-	move(QApplication::desktop()->availableGeometry().center() -
+	QScreen *screen = QGuiApplication::primaryScreen();
+	move(screen->availableGeometry().center() -
 		rect().center());
 }
 

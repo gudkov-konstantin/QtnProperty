@@ -58,7 +58,7 @@ private slots:
 
 	void on_buttonBox_clicked(QAbstractButton *button);
 
-	void on_propertyWidget_customContextMenuRequested(const QPoint &pos);
+	virtual void on_propertyWidget_customContextMenuRequested(const QPoint &pos);
 
 	void on_actionPropertyAdd_triggered();
 

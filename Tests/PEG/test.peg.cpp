@@ -67,7 +67,7 @@ void QtnPropertySetTest1::init()
     static QString description = "Test property_set description";
     setDescription(description);
     setId(1);
-    setState(0);
+    setState((QtnPropertyState)0);
     
     // start children initialization
     static QString a_name = QStringLiteral("a");

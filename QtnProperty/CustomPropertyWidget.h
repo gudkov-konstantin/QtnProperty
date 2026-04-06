@@ -76,7 +76,7 @@ private:
 	QtnPropertyBase *newProperty(QtnPropertySet *parent, const QVariant &value,
 		const QString &key, int index, VarProperty *mapParent);
 
-	void addProperty(
+	virtual void addProperty(
 		QtnPropertyBase *source, const QtnCustomPropertyData &data);
 	void duplicateProperty(
 		QtnPropertyBase *source, const QtnCustomPropertyData &data);

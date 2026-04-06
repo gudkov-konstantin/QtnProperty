@@ -55,7 +55,7 @@ void QtnCompleterItemDelegate::paint(QPainter *painter,
 					if (currentStr.startsWith(
 							subString, completer->caseSensitivity()))
 					{
-						highlightRect.setWidth(fm.width(QString::fromRawData(
+						highlightRect.setWidth(fm.horizontalAdvance(QString::fromRawData(
 							currentStr.constData(), subString.length())));
 						contains = true;
 					}
@@ -67,9 +67,9 @@ void QtnCompleterItemDelegate::paint(QPainter *painter,
 					if (i >= 0)
 					{
 						highlightRect.setLeft(highlightRect.left() +
-							fm.width(QString::fromRawData(
+							fm.horizontalAdvance(QString::fromRawData(
 								currentStr.constData(), i)));
-						highlightRect.setWidth(fm.width(QString::fromRawData(
+						highlightRect.setWidth(fm.horizontalAdvance(QString::fromRawData(
 							&currentStr.constData()[i], subString.length())));
 						contains = true;
 					}
@@ -80,7 +80,7 @@ void QtnCompleterItemDelegate::paint(QPainter *painter,
 							subString, completer->caseSensitivity()))
 					{
 						highlightRect.setLeft(highlightRect.left() +
-							fm.width(
+							fm.horizontalAdvance(
 								QString::fromRawData(currentStr.constData(),
 									currentStr.length() - subString.length())));
 						contains = true;

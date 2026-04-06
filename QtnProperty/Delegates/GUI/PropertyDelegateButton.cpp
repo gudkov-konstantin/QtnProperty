@@ -139,7 +139,7 @@ void QtnPropertyDelegateButtonLink::createSubItemsImpl(
 	QtnDrawContext &context, QList<QtnSubItem> &subItems)
 {
 	QtnSubItem linkItem(context.rect.marginsRemoved(context.margins));
-	linkItem.rect.setWidth(context.painter->fontMetrics().width(m_title));
+	linkItem.rect.setWidth(context.painter->fontMetrics().horizontalAdvance(m_title));
 	linkItem.setPropertyDescriptionAsTooltip(owner());
 	linkItem.trackState();
 

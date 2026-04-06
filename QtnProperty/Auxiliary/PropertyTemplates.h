@@ -177,14 +177,14 @@ protected:
 
 	virtual bool toVariantImpl(QVariant &var) const override
 	{
-		var.setValue<ValueTypeStore>(value());
+		var.setValue(value());
 		return var.isValid();
 	}
 
 private:
 	QtnSinglePropertyBase(const QtnSinglePropertyBase &) Q_DECL_EQ_DELETE;
 };
-/*
+
 template <typename QtnSinglePropertyBaseType>
 class QtnSinglePropertyBaseAsImpl : public QtnSinglePropertyBaseType
 {
@@ -206,7 +206,7 @@ private:
 		setValueBaseImpl(std::move(newValue), reason);
 	}
 };
-*/
+
 template <typename QtnSinglePropertyBaseType, typename ActualValueType, typename EqPred = std::equal_to<ActualValueType>>
 class QtnSinglePropertyBaseAs : public QtnSinglePropertyBaseType
 {

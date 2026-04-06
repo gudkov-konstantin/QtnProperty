@@ -1,7 +1,9 @@
 #include "Demo.peg.h"
 
 #include <QFileDialog>
+#include <QRandomGenerator>
 #include <QDebug>
+
 static QtnEnumInfo& create_COLOR_info()
 {
     QVector<QtnEnumValueInfo> staticValues;
@@ -197,7 +199,7 @@ void QtnPropertySetSubPropertySetType::connectDelegates()
     FolderNameProperty.setDelegateInfoCallback([] () -> QtnPropertyDelegateInfo {
         QtnPropertyDelegateInfo info;
         info.name = "File";
-        info.attributes["fileMode"] = QFileDialog::DirectoryOnly;
+        info.attributes["fileMode"] = QFileDialog::Directory;
         info.attributes["invalidColor"] = QColor(Qt::blue);
         return info;
     });
@@ -577,7 +579,9 @@ void QtnPropertySetSamplePS::init()
     RGBColor.setName(RGBColor_name);
     RGBColor.setClickHandler([this](const QtnPropertyABColor* color) {
             qDebug() << Q_FUNC_INFO << "Color has clicked: " << color;
-            RGBColor = QColor::fromRgb(qrand()%255, qrand()%255, qrand()%255);
+            RGBColor = QColor::fromRgb(QRandomGenerator::global()->generate() % 255,
+                                       QRandomGenerator::global()->generate() % 255,
+                                       QRandomGenerator::global()->generate() % 255);
         });
     static QString RGBColor_description = "ABColor property with RGB components";
     RGBColor.setDescription(RGBColor_description);

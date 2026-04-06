@@ -506,13 +506,13 @@ void QtnPropertyView::mousePressEvent(QMouseEvent *e)
 	bool isSplittableItem = index >= 0
 		? m_visibleItems.at(index).item->delegate->isSplittable()
 		: false;
-	if (isSplittableItem && qAbs(e->x() - splitPosition()) < TOLERANCE)
+	if (isSplittableItem && qAbs(e->position().x() - splitPosition()) < TOLERANCE)
 	{
 		m_rubberBand.reset(new QRubberBand(QRubberBand::Line, this));
 
 		QRect rect = viewport()->rect();
-		rect.setLeft(e->x());
-		rect.setRight(e->x());
+		rect.setLeft(e->position().x());
+		rect.setRight(e->position().x());
 		m_rubberBand->setGeometry(rect);
 		m_rubberBand->show();
 	} else
@@ -540,7 +540,7 @@ void QtnPropertyView::mouseReleaseEvent(QMouseEvent *e)
 
 		// update split ratio
 		QRect rect = viewport()->rect();
-		updateSplitRatio((float) (e->x() - rect.left()) / (float) rect.width());
+		updateSplitRatio((float) (e->position().x() - rect.left()) / (float) rect.width());
 	} else
 	{
 		handleMouseEvent(visibleItemIndexByPoint(e->pos()), e, e->pos());
@@ -558,8 +558,8 @@ void QtnPropertyView::mouseMoveEvent(QMouseEvent *e)
 		if (e->buttons() == Qt::LeftButton)
 		{
 			QRect rect = viewport()->rect();
-			rect.setLeft(e->x());
-			rect.setRight(e->x());
+			rect.setLeft(e->position().x());
+			rect.setRight(e->position().x());
 			m_rubberBand->setGeometry(rect);
 
 			if (m_style & QtnPropertyViewStyleLiveSplit)
@@ -567,7 +567,7 @@ void QtnPropertyView::mouseMoveEvent(QMouseEvent *e)
 				// update split ratio
 				QRect rect = viewport()->rect();
 				updateSplitRatio(
-					(float) (e->x() - rect.left()) / (float) rect.width());
+					(float) (e->position().x() - rect.left()) / (float) rect.width());
 			}
 		}
 	} else
@@ -577,7 +577,7 @@ void QtnPropertyView::mouseMoveEvent(QMouseEvent *e)
 			? m_visibleItems.at(index).item->delegate->isSplittable()
 			: false;
 		bool atSplitterPos =
-			isSplittable && qAbs(e->x() - splitPosition()) < TOLERANCE;
+			isSplittable && qAbs(e->position().x() - splitPosition()) < TOLERANCE;
 		if (!handleMouseEvent(index, e, e->pos()))
 		{
 			if (atSplitterPos)
@@ -810,7 +810,7 @@ void QtnPropertyView::keyPressEvent(QKeyEvent *e)
 void QtnPropertyView::wheelEvent(QWheelEvent *e)
 {
 	bool processed =
-		handleMouseEvent(visibleItemIndexByPoint(e->pos()), e, e->pos());
+		handleMouseEvent(visibleItemIndexByPoint(e->position().toPoint()), e, e->position().toPoint());
 	if (processed)
 		return;
 

@@ -153,8 +153,7 @@ QtnPropertyDelegateQFont::QtnPropertyDelegateQFont(QtnPropertyQFontBase &owner)
 
 	QtnPropertyDelegateInfo delegate;
 	delegate.name = qtnComboBoxDelegate();
-	QFontDatabase fDB;
-	delegate.attributes[qtnItemsAttr()] = fDB.families();
+	delegate.attributes[qtnItemsAttr()] = QFontDatabase::families();
 	propertyFamily->setDelegateInfo(delegate);
 
 	propertyStyle->setName(QStringLiteral("style"));

@@ -200,14 +200,15 @@ bool QtnCompleterLineEdit::Completer::eventFilter(
 			case QEvent::MouseMove:
 			{
 				auto me = static_cast<QMouseEvent *>(event);
-				auto localPos = mLineEdit->mapFromGlobal(me->globalPos());
+				auto localPos = mLineEdit->mapFromGlobal(me->globalPosition().toPoint());
 				if (mLineEdit->rect().contains(localPos))
 				{
 					shouldComplete = !mListView->isVisible();
 					disableHide = true;
 					if (watched != mLineEdit)
 					{
-						me->setLocalPos(localPos);
+						me->position().setX(localPos.x());
+						me->position().setY(localPos.y());
 						mLineEdit->event(event);
 					}
 					break;
@@ -216,7 +217,7 @@ bool QtnCompleterLineEdit::Completer::eventFilter(
 				{
 					bool outside = !mListView->isVisible() ||
 						!mListView->rect().contains(mListView->mapFromGlobal(
-							static_cast<QMouseEvent *>(event)->globalPos()));
+							static_cast<QMouseEvent *>(event)->globalPosition().toPoint()));
 
 					if ((event->type() == QEvent::MouseButtonRelease &&
 							!outside) ||

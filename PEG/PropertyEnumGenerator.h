@@ -21,6 +21,7 @@
 #include <QString>
 #include <QVector>
 #include <QStack>
+#include <QMap>
 #include <QSharedPointer>
 #include <QTextStream>
 
@@ -45,7 +46,7 @@ public:
             }
         }
 
-        return *this << endl << QString(TAB_LEN*(m_indent+indentOffset), ' ');
+        return *this << Qt::endl << QString(TAB_LEN*(m_indent+indentOffset), ' ');
     }
 
     void addIndent() { ++m_indent; }

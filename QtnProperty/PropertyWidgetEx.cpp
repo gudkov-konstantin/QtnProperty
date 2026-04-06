@@ -386,7 +386,7 @@ void QtnPropertyWidgetEx::dropEvent(QDropEvent *event)
 		case Qt::CopyAction:
 		{
 			auto view = propertyView();
-			auto pos = view->mapFrom(this, event->pos());
+			auto pos = view->mapFrom(this, event->position().toPoint());
 			QRect rect;
 			auto destination = view->getPropertyAt(pos, &rect);
 

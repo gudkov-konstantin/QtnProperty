@@ -667,7 +667,7 @@ bool QtnPropertyBase::toVariantImpl(QVariant &var) const
 	if (!toStr(str))
 		return false;
 
-	var.setValue<QString>(str);
+	var.setValue(str);
 	return true;
 }
 

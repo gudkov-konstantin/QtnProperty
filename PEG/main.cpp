@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	{
 		QTextStream(stdout) << QString("peg usage: peg <input file> [<cpp "
 									   "output file> [h output file]]")
-							<< endl;
+							<< Qt::endl;
 		return 0;
 	}
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 	{
 		QTextStream(stderr) << QString("Error: file '%1' doesn't exist")
 								   .arg(fi.absoluteFilePath())
-							<< endl;
+							<< Qt::endl;
 		return 1;
 	}
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 		QTextStream(stderr)
 			<< QString("Error: cannot open file '%1' for reading")
 				   .arg(inputFileName)
-			<< endl;
+			<< Qt::endl;
 		return 1;
 	}
 

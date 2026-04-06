@@ -411,7 +411,6 @@ bool QtnPropertyDelegateQStringFile::isPropertyValid() const
 			return QFileInfo(filePath).isFile();
 
 		case QFileDialog::Directory:
-		case QFileDialog::DirectoryOnly:
 			return QFileInfo(filePath).isDir();
 	}
 
@@ -524,7 +523,6 @@ QtnPropertyQStringListComboBoxHandler::QtnPropertyQStringListComboBoxHandler(
 	editor.clear();
 	editor.addItems(items);
 	editor.setEditable(editable);
-	editor.setAutoCompletion(false);
 
 	if (editable)
 		editor.installEventFilter(this);
@@ -1083,12 +1081,12 @@ bool QtnPropertyQStringCandidatesComboBoxHandler::eventFilter(
 		{
 			auto me = static_cast<QMouseEvent *>(event);
 			auto toolButton = editor().toolButton;
-			auto localPos = toolButton->mapFromGlobal(me->globalPos());
+			auto localPos = toolButton->mapFromGlobal(me->globalPosition().toPoint());
 			if (toolButton->rect().contains(localPos))
 			{
 				QObject *toolButtonObject = toolButton;
 				QMouseEvent buttonEvent(event->type(), localPos,
-					me->windowPos(), me->globalPos(), me->button(),
+					me->scenePosition(), me->globalPosition().toPoint(), me->button(),
 					me->buttons(), me->modifiers(), me->source());
 				toolButtonObject->event(&buttonEvent);
 				return true;
