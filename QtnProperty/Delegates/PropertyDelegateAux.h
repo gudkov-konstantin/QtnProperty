@@ -24,6 +24,7 @@ limitations under the License.
 #include <QStylePainter>
 #include <QEvent>
 #include <QVariant>
+#include <QMetaType>
 
 class QtnPropertyBase;
 class QtnPropertyView;
@@ -236,7 +237,7 @@ template <typename T,
 	typename std::enable_if<std::is_integral<T>::value>::type * = nullptr>
 void fixMinMaxVariant(QVariant &minv, QVariant &maxv)
 {
-	if (minv.type() == QVariant::ULongLong)
+	if (minv.typeId() ==  QMetaType::ULongLong)
 	{
 		quint64 min = minv.toULongLong();
 		if (min > quint64(std::numeric_limits<T>::max()))
@@ -260,7 +261,7 @@ void fixMinMaxVariant(QVariant &minv, QVariant &maxv)
 		}
 	}
 
-	if (maxv.type() == QVariant::ULongLong)
+	if (maxv.typeId() == QMetaType::ULongLong)
 	{
 		quint64 max = maxv.toULongLong();
 		if (max > quint64(std::numeric_limits<T>::max()))
@@ -284,7 +285,7 @@ void fixMinMaxVariant(QVariant &minv, QVariant &maxv)
 		}
 	}
 
-	if (minv.isValid() && maxv.isValid() && maxv < minv)
+	if (minv.isValid() && maxv.isValid() && QVariant::compare(maxv, minv) == QPartialOrdering::less)
 	{
 		minv = QVariant();
 		maxv = QVariant();

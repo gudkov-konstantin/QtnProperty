@@ -60,7 +60,7 @@ public:
 
 	static Type GetTypeFromValue(const QVariant &value);
 	Type GetType() const;
-	QVariant::Type GetVariantType() const;
+	QMetaType::Type GetVariantType() const;
 
 	int GetIndex() const;
 	bool SetIndex(int newIndex);

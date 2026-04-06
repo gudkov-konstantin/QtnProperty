@@ -164,33 +164,33 @@ bool CustomPropertyOptionsDialog::execute(QtnCustomPropertyData &result)
 	return false;
 }
 
-void CustomPropertyOptionsDialog::setType(QVariant::Type type)
+void CustomPropertyOptionsDialog::setType(QMetaType::Type type)
 {
 	switch (type)
 	{
-		case QVariant::List:
+		case QMetaType::QVariantList:
 			ui->rbList->setChecked(true);
 			break;
 
-		case QVariant::Map:
+		case QMetaType::QVariantMap:
 			ui->rbDictionary->setChecked(true);
 			break;
 
-		case QVariant::Bool:
+		case QMetaType::Bool:
 			ui->rbBoolean->setChecked(true);
 			break;
 
-		case QVariant::Int:
-		case QVariant::UInt:
-		case QVariant::LongLong:
-		case QVariant::ULongLong:
-		case QVariant::Double:
+		case QMetaType::Int:
+		case QMetaType::UInt:
+		case QMetaType::LongLong:
+		case QMetaType::ULongLong:
+		case QMetaType::Double:
 			ui->rbNumeric->setChecked(true);
 			break;
 
-		case QVariant::String:
-		case QVariant::Char:
-		case QVariant::Color:
+		case QMetaType::QString:
+		case QMetaType::Char:
+		case QMetaType::QColor:
 			ui->rbString->setChecked(true);
 			break;
 

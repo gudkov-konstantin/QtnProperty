@@ -89,7 +89,7 @@ public:
 	void executeReadOnly();
 	bool execute(QtnCustomPropertyData &result);
 
-	void setType(QVariant::Type type);
+	void setType(QMetaType::Type type);
 	void setTypeBoxEnabled(bool value);
 
 	void setReadOnly(bool readOnly);

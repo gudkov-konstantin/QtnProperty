@@ -24,6 +24,8 @@ limitations under the License.
 #include "Core/PropertyDouble.h"
 #include "Core/PropertyQString.h"
 
+#include <QMetaTypeId>
+
 VarProperty::VarProperty(QObject *parent, VarProperty::Type type,
 	const QString &name, int index, const QVariant &value)
 	: QObject(parent)
@@ -124,15 +126,14 @@ VarProperty::Type VarProperty::GetTypeFromValue(const QVariant &value)
 {
 	Type type;
 
-	switch (value.type())
+	switch (value.typeId())
 	{
-		case QVariant::Hash:
-		case QVariant::Map:
+		case QMetaType::QVariantHash:
+		case QMetaType::QVariantMap:
 			type = Map;
 			break;
-
-		case QVariant::StringList:
-		case QVariant::List:
+		case QMetaType::QStringList:
+		case QMetaType::QVariantList:
 			type = List;
 			break;
 
@@ -149,21 +150,21 @@ VarProperty::Type VarProperty::GetType() const
 	return type;
 }
 
-QVariant::Type VarProperty::GetVariantType() const
+QMetaType::Type VarProperty::GetVariantType() const
 {
 	switch (type)
 	{
 		case Value:
-			return value.type();
+			return (QMetaType::Type)value.typeId();
 
 		case List:
-			return QVariant::List;
+			return QMetaType::QVariantList;
 
 		case Map:
-			return QVariant::Map;
+			return QMetaType::QVariantMap;
 	}
 
-	return QVariant::Invalid;
+	return QMetaType::UnknownType;
 }
 
 int VarProperty::GetIndex() const
@@ -325,25 +326,24 @@ QtnPropertyBase *VarProperty::NewExtraProperty(QtnPropertySet *set,
 	if (index >= 0)
 		name = QString("[%1]").arg(QString::number(index));
 
-	auto type = value.type();
+	auto type = value.typeId();
 
 	switch (type)
 	{
-		case QVariant::Hash:
-		case QVariant::Map:
+		case QMetaType::QVariantHash:
+		case QMetaType::QVariantMap:
 		{
 			return NewExtraPropertySet(
 				set, value.toMap(), mapParent, name, index, registerProperty);
 		}
-
-		case QVariant::StringList:
-		case QVariant::List:
+		case QMetaType::QStringList:
+		case QMetaType::QVariantList:
 		{
 			return NewExtraPropertyList(
 				set, value.toList(), mapParent, name, index, registerProperty);
 		}
 
-		case QVariant::Int:
+		case QMetaType::Int:
 		{
 			auto p = new QtnPropertyInt(set);
 
@@ -354,7 +354,7 @@ QtnPropertyBase *VarProperty::NewExtraProperty(QtnPropertySet *set,
 			break;
 		}
 
-		case QVariant::UInt:
+		case QMetaType::UInt:
 		{
 			auto p = new QtnPropertyUInt(set);
 
@@ -365,9 +365,9 @@ QtnPropertyBase *VarProperty::NewExtraProperty(QtnPropertySet *set,
 			break;
 		}
 
-		case QVariant::LongLong:
-		case QVariant::ULongLong:
-		case QVariant::Double:
+		case QMetaType::LongLong:
+		case QMetaType::ULongLong:
+		case QMetaType::Double:
 		{
 			auto p = new QtnPropertyDouble(set);
 
@@ -378,7 +378,7 @@ QtnPropertyBase *VarProperty::NewExtraProperty(QtnPropertySet *set,
 			break;
 		}
 
-		case QVariant::Bool:
+		case QMetaType::Bool:
 		{
 			auto p = new QtnPropertyBool(set);
 

@@ -54,10 +54,10 @@ void QtnPropertyDelegate::applySubPropertyInfo(
 	auto &subAttributes = subDelegateInfo.attributes;
 	subAttributes = info.attributes;
 	auto vSubDelegate = subAttributes.value(subInfo.key.toUtf8());
-	switch (vSubDelegate.type())
+	switch (vSubDelegate.typeId())
 	{
-		case QVariant::Map:
-		case QVariant::Hash:
+		case QMetaType::QVariantMap:
+		case QMetaType::QVariantHash:
 		{
 			auto vmap = vSubDelegate.toMap();
 			static const auto sNameKey = QStringLiteral("name");
@@ -66,7 +66,7 @@ void QtnPropertyDelegate::applySubPropertyInfo(
 				if (it.key() == sNameKey)
 				{
 					auto vname = vmap.value(sNameKey);
-					subDelegateInfo.name = vname.type() == QVariant::ByteArray
+					subDelegateInfo.name = vname.typeId() == QMetaType::QByteArray
 						? vname.toByteArray()
 						: vname.toString().toUtf8();
 				} else

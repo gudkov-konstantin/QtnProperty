@@ -35,9 +35,9 @@ bool qtnCompareQVariants(const QVariant &left, const QVariant &right)
 		return false;
 	}
 
-	switch (left.type())
+	switch (left.typeId())
 	{
-		case QVariant::Hash:
+		case QMetaType::QVariantHash:
 		{
 			const auto leftMap = left.toHash();
 			const auto rightMap = right.toHash();
@@ -62,7 +62,7 @@ bool qtnCompareQVariants(const QVariant &left, const QVariant &right)
 			return true;
 		}
 
-		case QVariant::Map:
+		case QMetaType::QVariantMap:
 		{
 			const auto leftMap = left.toMap();
 			const auto rightMap = right.toMap();
@@ -87,7 +87,7 @@ bool qtnCompareQVariants(const QVariant &left, const QVariant &right)
 			return true;
 		}
 
-		case QVariant::List:
+		case QMetaType::QVariantList:
 		{
 			const auto leftList = left.toList();
 			const auto rightList = left.toList();
@@ -196,17 +196,17 @@ QtnPropertyQVariant::QtnPropertyQVariant(QObject *parent)
 
 QString QtnPropertyQVariant::valueToString(const QVariant &value)
 {
-	return !variantIsObject(value.type()) ? value.toString() : QString();
+	return !variantIsObject((QMetaType::Type)value.typeId()) ? value.toString() : QString();
 }
 
-bool QtnPropertyQVariant::variantIsObject(QVariant::Type type)
+bool QtnPropertyQVariant::variantIsObject(QMetaType::Type type)
 {
 	switch (type)
 	{
-		case QVariant::Hash:
-		case QVariant::Map:
-		case QVariant::StringList:
-		case QVariant::List:
+		case QMetaType::QVariantHash:
+		case QMetaType::QVariantMap:
+		case QMetaType::QStringList:
+		case QMetaType::QVariantList:
 			return true;
 
 		default:
@@ -216,16 +216,16 @@ bool QtnPropertyQVariant::variantIsObject(QVariant::Type type)
 	return false;
 }
 
-QString QtnPropertyQVariant::getPlaceholderStr(QVariant::Type type)
+QString QtnPropertyQVariant::getPlaceholderStr(QMetaType::Type type)
 {
 	switch (type)
 	{
-		case QVariant::Hash:
-		case QVariant::Map:
+		case QMetaType::QVariantHash:
+		case QMetaType::QVariantMap:
 			return tr("(Dictionary)");
 
-		case QVariant::StringList:
-		case QVariant::List:
+		case QMetaType::QStringList:
+		case QMetaType::QVariantList:
 			return tr("(List)");
 
 		default:
@@ -279,7 +279,7 @@ bool QtnPropertyDelegateQVariant::propertyValueToStrImpl(
 	strValue = QtnPropertyQVariant::valueToString(value);
 
 	if (strValue.isEmpty())
-		strValue = QtnPropertyQVariant::getPlaceholderStr(value.type());
+		strValue = QtnPropertyQVariant::getPlaceholderStr((QMetaType::Type)value.typeId());
 
 	return true;
 }
@@ -334,7 +334,7 @@ void QtnPropertyQVariantEditBttnHandler::updateEditor()
 		QVariant value;
 		value = property().value();
 
-		if (QtnPropertyQVariant::variantIsObject(value.type()))
+		if (QtnPropertyQVariant::variantIsObject((QMetaType::Type)value.typeId()))
 		{
 			is_object = true;
 			edit->setText(QString());
@@ -345,7 +345,7 @@ void QtnPropertyQVariantEditBttnHandler::updateEditor()
 		}
 
 		edit->setPlaceholderText(
-			QtnPropertyQVariant::getPlaceholderStr(value.type()));
+			QtnPropertyQVariant::getPlaceholderStr((QMetaType::Type)value.typeId()));
 		edit->selectAll();
 	}
 }

@@ -61,12 +61,12 @@ bool QtnPropertyQKeySequenceBase::fromVariantImpl(
 	const QVariant &var, QtnPropertyChangeReason reason)
 {
 	QKeySequence keySequence;
-	switch (var.type())
+	switch (var.typeId())
 	{
-		case QVariant::String:
+		case QMetaType::QString:
 			return fromStrImpl(var.toString(), reason);
 
-		case QVariant::KeySequence:
+		case QMetaType::QKeySequence:
 			keySequence = var.value<QKeySequence>();
 			break;
 

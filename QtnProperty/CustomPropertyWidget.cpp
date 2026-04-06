@@ -41,7 +41,7 @@ static const QString kCustomPropertyData =
 QtnCustomPropertyWidget::QtnCustomPropertyWidget(QWidget *parent)
 	: QtnPropertyWidgetEx(parent)
 	, dataPtr(nullptr)
-	, lastAddType(QVariant::Invalid)
+	, lastAddType(QMetaType::UnknownType)
 	, readOnly(false)
 	, autoUpdate(false)
 	, backupAutoUpdate(false)
@@ -164,7 +164,7 @@ void QtnCustomPropertyWidget::addProperty()
 
 		if (dialog.execute(result_data))
 		{
-			lastAddType = result_data.value.type();
+			lastAddType = (QMetaType::Type)result_data.value.typeId();
 			addProperty(property, result_data);
 		}
 	}
@@ -269,22 +269,22 @@ void QtnCustomPropertyWidget::propertyOptions()
 		{
 			auto old_data = var_property->CreateVariant();
 
-			switch (result_data.value.type())
+			switch (result_data.value.typeId())
 			{
-				case QVariant::Bool:
+				case QMetaType::Bool:
 					result_data.value = old_data.toBool();
 					break;
 
-				case QVariant::Char:
-				case QVariant::String:
+				case QMetaType::Char:
+				case QMetaType::QString:
 					result_data.value = old_data.toString();
 					break;
 
-				case QVariant::Int:
-				case QVariant::UInt:
-				case QVariant::LongLong:
-				case QVariant::ULongLong:
-				case QVariant::Double:
+				case QMetaType::Int:
+				case QMetaType::UInt:
+				case QMetaType::LongLong:
+				case QMetaType::ULongLong:
+				case QMetaType::Double:
 					result_data.value = old_data.toDouble();
 					break;
 
@@ -299,7 +299,7 @@ void QtnCustomPropertyWidget::propertyOptions()
 						{
 							case VarProperty::List:
 							{
-								if (result_data.value.type() == QVariant::Map)
+								if (result_data.value.typeId() == QMetaType::QVariantMap)
 								{
 									old_data.clear();
 									QVariantMap result;
@@ -319,7 +319,7 @@ void QtnCustomPropertyWidget::propertyOptions()
 
 							case VarProperty::Map:
 							{
-								if (result_data.value.type() == QVariant::List)
+								if (result_data.value.typeId() == QMetaType::QVariantList)
 								{
 									old_data.clear();
 									QVariantList result;

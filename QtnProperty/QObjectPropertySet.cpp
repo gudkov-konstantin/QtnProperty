@@ -79,7 +79,7 @@ QtnProperty *qtnCreateQObjectProperty(QObject *object,
 
 	auto &map = qtnFactoryMap();
 
-	auto it = map.find(metaProperty.type());
+	auto it = map.find(metaProperty.typeId());
 
 	if (it == map.end())
 		it = map.find(metaProperty.userType());
