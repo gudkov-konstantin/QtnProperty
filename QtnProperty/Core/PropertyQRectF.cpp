@@ -20,6 +20,8 @@ limitations under the License.
 #include "PropertyQRect.h"
 #include "PropertyQSize.h"
 
+#include <QRegularExpression>
+
 QtnProperty *QtnPropertyQRectFBase::createLeftProperty(bool move)
 {
 	return createFieldProperty(&QRectF::left,
@@ -73,24 +75,24 @@ QtnPropertyQRectFBase::QtnPropertyQRectFBase(QObject *parent)
 bool QtnPropertyQRectFBase::fromStrImpl(
 	const QString &str, QtnPropertyChangeReason reason)
 {
-	static QRegExp parserRect(
-		"^\\s*QRectF\\s*\\(([^\\)]+)\\)\\s*$", Qt::CaseInsensitive);
-	static QRegExp parserParams("^\\s*(\\-?\\d+(\\.\\d{0,})?)\\s*,\\s*(\\-?\\d+"
+	static QRegularExpression parserRect(
+		"^\\s*QRectF\\s*\\(([^\\)]+)\\)\\s*$", QRegularExpression::CaseInsensitiveOption);
+	static QRegularExpression parserParams("^\\s*(\\-?\\d+(\\.\\d{0,})?)\\s*,\\s*(\\-?\\d+"
 								"(\\.\\d{0,})?)\\s*,\\s*(\\d+(\\.\\d{0,})?)\\s*"
 								",\\s*(\\d+(\\.\\d{0,})?)\\s*$",
-		Qt::CaseInsensitive);
+		QRegularExpression::CaseInsensitiveOption);
 
-	if (!parserRect.exactMatch(str))
+	if (!parserRect.match(str).hasMatch())
 		return false;
 
-	QStringList params = parserRect.capturedTexts();
+	QStringList params = parserRect.match(str).capturedTexts();
 	if (params.size() != 2)
 		return false;
 
-	if (!parserParams.exactMatch(params[1]))
+	if (!parserParams.match(params[1]).hasMatch())
 		return false;
 
-	params = parserParams.capturedTexts();
+	params = parserParams.match(params[1]).capturedTexts();
 	if (params.size() != 9)
 		return false;
 

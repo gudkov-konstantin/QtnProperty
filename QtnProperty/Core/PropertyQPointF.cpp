@@ -19,6 +19,8 @@ limitations under the License.
 
 #include "PropertyQPoint.h"
 
+#include <QRegularExpression>
+
 QtnPropertyQPointFBase::QtnPropertyQPointFBase(QObject *parent)
 	: ParentClass(parent)
 {
@@ -59,26 +61,26 @@ QString QtnPropertyQPointFBase::getYDescriptionFormat() const
 bool QtnPropertyQPointFBase::fromStrImpl(
 	const QString &str, QtnPropertyChangeReason reason)
 {
-	static QRegExp parserPoint(
+	static QRegularExpression parserPoint(
 		QLatin1String("^\\s*QPointF\\s*\\(([^\\)]+)\\)\\s*$"),
-		Qt::CaseInsensitive);
+		QRegularExpression::CaseInsensitiveOption);
 
-	if (!parserPoint.exactMatch(str))
+	if (!parserPoint.match(str).hasMatch())
 		return false;
 
-	QStringList params = parserPoint.capturedTexts();
+	QStringList params = parserPoint.match(str).capturedTexts();
 
 	if (params.size() != 2)
 		return false;
 
-	static QRegExp parserParams(
+	static QRegularExpression parserParams(
 		"^\\s*(\\-?\\d+(\\.\\d{0,})?)\\s*,\\s*(\\-?\\d+(\\.\\d{0,})?)\\s*$",
-		Qt::CaseInsensitive);
+		QRegularExpression::CaseInsensitiveOption);
 
-	if (!parserParams.exactMatch(params[1]))
+	if (!parserParams.match(params[1]).hasMatch())
 		return false;
 
-	params = parserParams.capturedTexts();
+	params = parserParams.match(params[1]).capturedTexts();
 
 	if (params.size() != 5)
 		return false;

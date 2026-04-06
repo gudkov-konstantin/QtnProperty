@@ -18,6 +18,8 @@ limitations under the License.
 #include "PropertyQSize.h"
 #include "PropertyInt.h"
 
+#include <QRegularExpression>
+
 QtnPropertyQSizeBase::QtnPropertyQSizeBase(QObject *parent)
 	: ParentClass(parent)
 {
@@ -40,24 +42,24 @@ QtnProperty *QtnPropertyQSizeBase::createHeightProperty()
 bool QtnPropertyQSizeBase::fromStrImpl(
 	const QString &str, QtnPropertyChangeReason reason)
 {
-	static QRegExp parserSize(
-		"^\\s*QSize\\s*\\(([^\\)]+)\\)\\s*$", Qt::CaseInsensitive);
+	static QRegularExpression parserSize(
+		"^\\s*QSize\\s*\\(([^\\)]+)\\)\\s*$", QRegularExpression::CaseInsensitiveOption);
 
-	if (!parserSize.exactMatch(str))
+	if (!parserSize.match(str).hasMatch())
 		return false;
 
-	QStringList params = parserSize.capturedTexts();
+	QStringList params = parserSize.match(str).capturedTexts();
 
 	if (params.size() != 2)
 		return false;
 
-	static QRegExp parserParams(
-		"^\\s*(-?\\d+)\\s*,\\s*(-?\\d+)\\s*$", Qt::CaseInsensitive);
+	static QRegularExpression parserParams(
+		"^\\s*(-?\\d+)\\s*,\\s*(-?\\d+)\\s*$", QRegularExpression::CaseInsensitiveOption);
 
-	if (!parserParams.exactMatch(params[1]))
+	if (!parserParams.match(params[1]).hasMatch())
 		return false;
 
-	params = parserParams.capturedTexts();
+	params = parserParams.match(params[1]).capturedTexts();
 
 	if (params.size() != 3)
 		return false;

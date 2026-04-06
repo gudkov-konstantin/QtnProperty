@@ -18,7 +18,7 @@
 
 #include <QCoreApplication>
 #include <QFileInfo>
-#include <QRegExp>
+#include <QRegularExpression>
 
 extern int yyparse();
 extern FILE *yyin;
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 	} else if (argc < 4)
 	{
 		hFileName = cppFileName;
-		hFileName.replace(QRegExp(".cpp$"), ".h");
+		hFileName.replace(QRegularExpression(".cpp$"), ".h");
 	} else
 	{
 		hFileName = argv[3];

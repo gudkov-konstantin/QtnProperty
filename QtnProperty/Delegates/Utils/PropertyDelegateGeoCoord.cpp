@@ -22,6 +22,7 @@ limitations under the License.
 #include "QtnProperty/Delegates/Utils/PropertyEditorAux.h"
 
 #include <QLineEdit>
+#include <QRegularExpression>
 
 QByteArray qtnGeoCoordDelegateName()
 {
@@ -68,37 +69,37 @@ QString val2strGeoCoord(const double c)
 
 double str2valGeoCoord(const QString &strVal)
 {
-	static const QRegExp parserDeg(
-		QString::fromUtf8(".*(\\d+)°.*"), Qt::CaseInsensitive);
-	static const QRegExp parserMin(".*(\\d+)\'.*", Qt::CaseInsensitive);
-	static const QRegExp parserSec(".*(\\d+\\.?\\d*)\".*", Qt::CaseInsensitive);
-	static const QRegExp parserSign("^(-).*", Qt::CaseInsensitive);
+	static const QRegularExpression parserDeg(
+		QString::fromUtf8(".*(\\d+)°.*"), QRegularExpression::CaseInsensitiveOption);
+	static const QRegularExpression parserMin(".*(\\d+)\'.*", QRegularExpression::CaseInsensitiveOption);
+	static const QRegularExpression parserSec(".*(\\d+\\.?\\d*)\".*", QRegularExpression::CaseInsensitiveOption);
+	static const QRegularExpression parserSign("^(-).*", QRegularExpression::CaseInsensitiveOption);
 
 	QString str = strVal;
 	str.remove(" ");
 	qreal val = 0.;
-	if (parserDeg.exactMatch(str))
+	if (parserDeg.match(str).hasMatch())
 	{
-		if (parserDeg.capturedTexts().size() == 2)
+		if (parserDeg.match(str).capturedTexts().size() == 2)
 		{
-			val += parserDeg.capturedTexts().at(1).toInt();
+			val += parserDeg.match(str).capturedTexts().at(1).toInt();
 		}
 	}
-	if (parserMin.exactMatch(str))
+	if (parserMin.match(str).hasMatch())
 	{
-		if (parserMin.capturedTexts().size() == 2)
+		if (parserMin.match(str).capturedTexts().size() == 2)
 		{
-			val += parserMin.capturedTexts().at(1).toInt() / 60.;
+			val += parserMin.match(str).capturedTexts().at(1).toInt() / 60.;
 		}
 	}
-	if (parserSec.exactMatch(str))
+	if (parserSec.match(str).hasMatch())
 	{
-		if (parserSec.capturedTexts().size() == 2)
+		if (parserSec.match(str).capturedTexts().size() == 2)
 		{
-			val += parserSec.capturedTexts().at(1).toDouble() / 60. / 60.;
+			val += parserSec.match(str).capturedTexts().at(1).toDouble() / 60. / 60.;
 		}
 	}
-	if (parserSign.exactMatch(str))
+	if (parserSign.match(str).hasMatch())
 	{
 		val = -val;
 	}
