@@ -1,3 +1,11 @@
+.qtc_clangd/
+.qtcreator/
+*.cflags
+*.config
+*.creator
+*.cxxflags
+*.files
+*.includes
 /tmp/
 /bin*/
 build*/
