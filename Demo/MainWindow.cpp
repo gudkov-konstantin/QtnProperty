@@ -36,10 +36,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 	ui->pw->setPropertySet(ps);
 
+#if defined(QTNPROPERTY_SCRIPT)
 	qtnScriptRegisterPropertyTypes(&jsEngine);
 	jsEngine.globalObject().setProperty("samplePS", jsEngine.newQObject(ps));
 
 	dbg.attachTo(&jsEngine);
+#endif
 
 	QScreen *screen = QGuiApplication::primaryScreen();
 	move(screen->availableGeometry().center() -
@@ -76,8 +78,10 @@ void MainWindow::on_editButton_clicked()
 
 void MainWindow::on_dbgButton_clicked()
 {
+#if defined(QTNPROPERTY_SCRIPT)
 	QMainWindow *dbgWindow = dbg.standardWindow();
 	dbgWindow->show();
+#endif
 }
 
 void MainWindow::on_pushButton_clicked()

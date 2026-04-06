@@ -2,7 +2,11 @@ include(../QtnPropertyDepend.pri)
 include(../Internal/TargetConfig.pri)
 include(../PEG/PEG.pri)
 
-QT += core gui widgets script scripttools
+QT += core gui widgets
+
+equals(QTNPROPERTY_SCRIPT, TRUE) {
+QT += script scripttools
+}
 
 TARGET = QtnPropertyDemo
 TEMPLATE = app

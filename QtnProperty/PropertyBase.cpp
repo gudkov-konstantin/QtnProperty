@@ -20,8 +20,12 @@ limitations under the License.
 #include "PropertySet.h"
 #include "PropertyConnector.h"
 
+#if defined(QTNPROPERTY_SCRIPT)
 #include <QScriptEngine>
+#endif
+
 #include <QCoreApplication>
+#include <QIODevice>
 
 const qint32 QtnPropertyIDInvalid = -1;
 static quint16 qtnPropertyMagicNumber = 0x1984;
@@ -65,30 +69,31 @@ private:
 	QScopedPointer<QtnPropertyDelegateInfo> m_delegateInfo;
 };
 
-static QScriptValue qtnPropertyChangeReasonToScriptValue(
+#if defined(QTNPROPERTY_SCRIPT)
+static QJSValue qtnPropertyChangeReasonToScriptValue(
 	QScriptEngine *engine, const QtnPropertyChangeReason &val)
 {
-	QScriptValue obj(engine, QtnPropertyChangeReason::Int(val));
+	QJSValue obj(QtnPropertyChangeReason::Int(val));
 	return obj;
 }
 
 static void qtnPropertyChangeReasonFromScriptValue(
-	const QScriptValue &obj, QtnPropertyChangeReason &val)
+	const QJSValue &obj, QtnPropertyChangeReason &val)
 {
-	val = (QtnPropertyChangeReason::enum_type) obj.toInt32();
+	val = (QtnPropertyChangeReason::enum_type) obj.toInt();
 }
 
-static QScriptValue qtnPropertyValuePtrToScriptValue(
+static QJSValue qtnPropertyValuePtrToScriptValue(
 	QScriptEngine *engine, const QtnPropertyValuePtr &val)
 {
 	Q_UNUSED(engine);
 	Q_UNUSED(val);
 	// no sutable conversion
-	return QScriptValue();
+	return QJSValue();
 }
 
 static void qtnPropertyValuePtrFromScriptValue(
-	const QScriptValue &obj, QtnPropertyValuePtr &val)
+	const QJSValue &obj, QtnPropertyValuePtr &val)
 {
 	Q_UNUSED(obj);
 	Q_UNUSED(val);
@@ -97,16 +102,16 @@ static void qtnPropertyValuePtrFromScriptValue(
 
 typedef const QtnPropertyBase *QtnPropertyBasePtr_t;
 
-static QScriptValue qtnPropertyBasePtrToScriptValue(
+static QJSValue qtnPropertyBasePtrToScriptValue(
 	QScriptEngine *engine, const QtnPropertyBasePtr_t &val)
 {
 	QtnPropertyBasePtr_t value = val;
-	QScriptValue obj = engine->newQObject(const_cast<QtnPropertyBase *>(value));
+	QJSValue obj = engine->newQObject(const_cast<QtnPropertyBase *>(value));
 	return obj;
 }
 
 static void qtnPropertyBasePtrFromScriptValue(
-	const QScriptValue &obj, QtnPropertyBasePtr_t &val)
+	const QJSValue &obj, QtnPropertyBasePtr_t &val)
 {
 	val = qobject_cast<const QtnPropertyBase *>(obj.toQObject());
 }
@@ -120,57 +125,58 @@ void qtnScriptRegisterPropertyTypes(QScriptEngine *engine)
 	qScriptRegisterMetaType(engine, qtnPropertyBasePtrToScriptValue,
 		qtnPropertyBasePtrFromScriptValue);
 
-	QScriptValue obj = engine->globalObject();
+	QJSValue obj = engine->globalObject();
 
 	obj.setProperty("QtnPropertyStateNone", QtnPropertyStateNone,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyStateNonSimple", QtnPropertyStateNonSimple,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyStateInvisible", QtnPropertyStateInvisible,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyStateImmutable", QtnPropertyStateImmutable,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyStateCollapsed", QtnPropertyStateCollapsed,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyStateNonSerialized",
 		QtnPropertyStateNonSerialized,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 
 	obj.setProperty("QtnPropertyChangeReasonNewValue",
 		QtnPropertyChangeReasonNewValue,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonLoadedValue",
 		QtnPropertyChangeReasonLoadedValue,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonValue",
 		QtnPropertyChangeReasonValue,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonName", QtnPropertyChangeReasonName,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonDescription",
 		QtnPropertyChangeReasonDescription,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonId", QtnPropertyChangeReasonId,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonStateLocal",
 		QtnPropertyChangeReasonStateLocal,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonStateInherited",
 		QtnPropertyChangeReasonStateInherited,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonState",
 		QtnPropertyChangeReasonState,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonChildPropertyAdd",
 		QtnPropertyChangeReasonChildPropertyAdd,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonChildPropertyRemove",
 		QtnPropertyChangeReasonChildPropertyRemove,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 	obj.setProperty("QtnPropertyChangeReasonChildren",
 		QtnPropertyChangeReasonChildren,
-		QScriptValue::ReadOnly | QScriptValue::Undeletable);
+		QJSValue::ReadOnly | QJSValue::Undeletable);
 }
+#endif
 
 extern bool qtnPropertyRegister();
 

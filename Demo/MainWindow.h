@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+
+#if defined(QTNPROPERTY_SCRIPT)
 #include <QScriptEngine>
 #include <QScriptEngineDebugger>
+#endif
 
 #include "QtnProperty/Property.h"
 
@@ -39,8 +42,10 @@ private:
 
 	Ui::MainWindow *ui;
 
+#if defined(QTNPROPERTY_SCRIPT)
 	QScriptEngineDebugger dbg;
 	QScriptEngine jsEngine;
+#endif
 
 	QStringList m_candidates;
 };

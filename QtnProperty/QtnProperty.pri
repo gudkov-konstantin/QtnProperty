@@ -1,5 +1,9 @@
 
-QT += core gui widgets script
+QT += core gui widgets
+
+equals(QTNPROPERTY_SCRIPT, TRUE) {
+QT += script
+}
 
 SOURCES +=\
     $$PWD/PropertyBase.cpp \

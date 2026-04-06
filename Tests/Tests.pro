@@ -2,7 +2,11 @@ include(../QtnPropertyDepend.pri)
 include(../Internal/TargetConfig.pri)
 include(../PEG/PEG.pri)
 
-QT += core gui widgets script testlib
+QT += core gui widgets testlib
+
+equals(QTNPROPERTY_SCRIPT, TRUE) {
+QT += script
+}
 
 TARGET = QtnPropertyTests
 

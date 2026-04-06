@@ -2,7 +2,10 @@
 #include "QtnProperty/QObjectPropertySet.h"
 #include "PEG/test.peg.h"
 #include <QtTest/QtTest>
+
+#if defined(QTNPROPERTY_SCRIPT)
 #include <QtScript/QScriptEngine>
+#endif
 
 static bool ret_true()
 {
@@ -836,6 +839,7 @@ void TestProperty::propertyScripting()
 		b.setDescription("isValid property.");
 		b.setId(15);
 
+#if defined(QTNPROPERTY_SCRIPT)
 		QScriptEngine eng;
 		qtnScriptRegisterPropertyTypes(&eng);
 		eng.globalObject().setProperty("b", eng.newQObject(&b));
@@ -932,6 +936,7 @@ void TestProperty::propertyScripting()
 		eng.evaluate("b.value = true;");
 		val = eng.evaluate("success");
 		QCOMPARE(val.toBool(), true);
+#endif
 	}
 }
 

@@ -1,6 +1,6 @@
 include(../Internal/TargetConfig.pri)
 
-TARGET = QtnProperty
+TARGET = QtnProperty$${QT_MAJOR_VERSION}
 TEMPLATE = lib
 VERSION = 2.0.3
 
