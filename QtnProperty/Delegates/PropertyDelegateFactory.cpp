@@ -45,6 +45,7 @@ limitations under the License.
 #include "QtnProperty/PropertyUInt64.h"
 #include "QtnProperty/MultiProperty.h"
 #include "QtnProperty/PropertyQVariant.h"
+#include "QtnProperty/PropertyQStringList.h"
 
 #include <QDebug>
 
@@ -255,6 +256,7 @@ void QtnPropertyDelegateFactory::registerDefaultDelegates(
 	QtnPropertyDelegateQVector3D::Register(factory);
 	QtnPropertyDelegateQVariant::Register(factory);
 	QtnMultiPropertyDelegate::Register(factory);
+	QtnPropertyDelegateStringList::Register(factory);
 }
 
 static QScopedPointer<QtnPropertyDelegateFactory> _staticInstance;

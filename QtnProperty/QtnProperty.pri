@@ -72,6 +72,7 @@ SOURCES +=\
     $$PWD/CustomPropertyOptionsDialog.cpp \
     $$PWD/VarProperty.cpp \
     $$PWD/PropertyQVariant.cpp \
+    $$PWD/PropertyQStringList.cpp \
     $$PWD/CustomPropertyWidget.cpp \
     $$PWD/QObjectPropertyWidget.cpp \
     $$PWD/MultiProperty.cpp \
@@ -160,6 +161,7 @@ HEADERS +=\
     $$PWD/CustomPropertyOptionsDialog.h \
     $$PWD/VarProperty.h \
     $$PWD/PropertyQVariant.h \
+    $$PWD/PropertyQStringList.h \
     $$PWD/CustomPropertyWidget.h \
     $$PWD/QObjectPropertyWidget.h \
     $$PWD/IQtnPropertyStateProvider.h \

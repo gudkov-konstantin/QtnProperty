@@ -20,6 +20,7 @@ limitations under the License.
 #include "PropertyUInt64.h"
 #include "PropertyQVariant.h"
 #include "PropertyQKeySequence.h"
+#include "PropertyQStringList.h"
 #include "Delegates/Core/PropertyDelegateBool.h"
 #include "Delegates/Core/PropertyDelegateDouble.h"
 #include "Delegates/Core/PropertyDelegateFloat.h"
@@ -150,6 +151,8 @@ static void qtnRegisterDefaultMetaPropertyFactory()
 		});
 	qtnRegisterMetaPropertyFactory(QMetaType::QKeySequence,
 		qtnCreateFactory<QtnPropertyQKeySequenceCallback>());
+	qtnRegisterMetaPropertyFactory(QMetaType::QStringList,
+		qtnCreateFactory<QtnPropertyQStringListCallback>());
 }
 
 bool qtnPropertyRegister()
