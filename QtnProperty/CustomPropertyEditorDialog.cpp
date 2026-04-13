@@ -28,6 +28,7 @@ limitations under the License.
 CustomPropertyEditorDialog::CustomPropertyEditorDialog(QWidget *parent)
 	: QDialog(parent)
 	, ui(new Ui::CustomPropertyEditorDialog)
+	, m_property_options(true)
 {
 	ui->setupUi(this);
 
@@ -116,6 +117,11 @@ void CustomPropertyEditorDialog::setReadOnly(bool value)
 	}
 }
 
+void CustomPropertyEditorDialog::setPropertyOptionsEnable(bool value)
+{
+	m_property_options = value;
+}
+
 void CustomPropertyEditorDialog::accept()
 {
 	qtnStopInplaceEdit(false);
@@ -164,8 +170,11 @@ void CustomPropertyEditorDialog::on_propertyWidget_customContextMenuRequested(
 
 		QMenu menu(this);
 
-		menu.addAction(ui->actionPropertyOptions);
-		menu.addSeparator();
+		if (m_property_options)
+		{
+			menu.addAction(ui->actionPropertyOptions);
+			menu.addSeparator();
+		}
 
 		menu.addAction(ui->actionPropertyAdd);
 		menu.addAction(ui->actionPropertyDuplicate);

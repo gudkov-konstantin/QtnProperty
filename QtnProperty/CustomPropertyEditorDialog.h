@@ -46,6 +46,7 @@ public:
 	bool execute(const QString &title, QVariant &data);
 
 	void setReadOnly(bool value);
+	void setPropertyOptionsEnable(bool value);
 
 	virtual void accept() override;
 	virtual void reject() override;
@@ -71,4 +72,6 @@ private:
 	void updateTitle();
 
 	Ui::CustomPropertyEditorDialog *ui;
+
+	bool m_property_options;
 };
