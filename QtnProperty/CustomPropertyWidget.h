@@ -36,6 +36,7 @@ public:
 	inline QVariant *getData() const;
 	void setData(QVariant *dataPtr, const QString &title = QString(),
 		bool force = false);
+	void setFixedAddType(QMetaType::Type type);
 
 	virtual bool canDeleteProperty(QtnPropertyBase *property) override;
 	virtual bool canCutToClipboard() override;
@@ -87,6 +88,8 @@ private:
 
 	QVariant *dataPtr;
 	QMetaType::Type lastAddType;
+	QMetaType::Type fixedAddType;
+
 	bool readOnly : 1;
 	bool autoUpdate : 1;
 	bool backupAutoUpdate : 1;

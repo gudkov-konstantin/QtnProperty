@@ -150,8 +150,6 @@ void CustomPropertyOptionsDialog::executeReadOnly()
 
 bool CustomPropertyOptionsDialog::execute(QtnCustomPropertyData &result)
 {
-	setReadOnly(false);
-
 	if (BasePropertyDialog::execute())
 	{
 		result.index = result_index;

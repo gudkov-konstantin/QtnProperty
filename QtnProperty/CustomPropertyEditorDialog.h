@@ -47,6 +47,7 @@ public:
 
 	void setReadOnly(bool value);
 	void setPropertyOptionsEnable(bool value);
+	void setPropertyFixedAddType(QMetaType::Type type);
 
 	virtual void accept() override;
 	virtual void reject() override;

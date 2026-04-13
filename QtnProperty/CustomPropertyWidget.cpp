@@ -42,6 +42,7 @@ QtnCustomPropertyWidget::QtnCustomPropertyWidget(QWidget *parent)
 	: QtnPropertyWidgetEx(parent)
 	, dataPtr(nullptr)
 	, lastAddType(QMetaType::UnknownType)
+	, fixedAddType(QMetaType::UnknownType)
 	, readOnly(false)
 	, autoUpdate(false)
 	, backupAutoUpdate(false)
@@ -84,6 +85,11 @@ void QtnCustomPropertyWidget::setData(
 		} else
 			rootSet = nullptr;
 	}
+}
+
+void QtnCustomPropertyWidget::setFixedAddType(QMetaType::Type type)
+{
+	fixedAddType = type;
 }
 
 bool QtnCustomPropertyWidget::canDeleteProperty(QtnPropertyBase *property)
@@ -160,7 +166,14 @@ void QtnCustomPropertyWidget::addProperty()
 				return;
 		}
 
-		dialog.setType(lastAddType);
+		if (fixedAddType != QMetaType::UnknownType)
+		{
+			dialog.setType(fixedAddType);
+			dialog.setTypeBoxEnabled(false);
+		} else
+		{
+			dialog.setType(lastAddType);
+		}
 
 		if (dialog.execute(result_data))
 		{
