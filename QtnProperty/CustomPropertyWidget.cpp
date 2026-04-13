@@ -43,6 +43,7 @@ QtnCustomPropertyWidget::QtnCustomPropertyWidget(QWidget *parent)
 	, dataPtr(nullptr)
 	, lastAddType(QMetaType::UnknownType)
 	, fixedAddType(QMetaType::UnknownType)
+	, elementInfo(nullptr)
 	, readOnly(false)
 	, autoUpdate(false)
 	, backupAutoUpdate(false)
@@ -90,6 +91,11 @@ void QtnCustomPropertyWidget::setData(
 void QtnCustomPropertyWidget::setFixedAddType(QMetaType::Type type)
 {
 	fixedAddType = type;
+}
+
+void QtnCustomPropertyWidget::setListElementDelegateInfo(QtnPropertyDelegateInfo *info)
+{
+	elementInfo = info;
 }
 
 bool QtnCustomPropertyWidget::canDeleteProperty(QtnPropertyBase *property)
@@ -924,11 +930,25 @@ QtnPropertyBase *QtnCustomPropertyWidget::newProperty(QtnPropertySet *parent,
 	const QVariant &value, const QString &key, int index,
 	VarProperty *mapParent)
 {
-	return VarProperty::NewExtraProperty(
+	QtnPropertyBase *newProperty = VarProperty::NewExtraProperty(
 		parent, value, key, index, mapParent, [this](QtnProperty *property) {
 			QObject::connect(property, &QtnProperty::propertyValueAccept, this,
 				&QtnCustomPropertyWidget::onPropertyValueAccept);
 		});
+	if (elementInfo && (value.typeId() == QMetaType::QStringList ||
+	                    value.typeId() == QMetaType::QVariantList))
+	{
+		QtnPropertySet *set = newProperty->asPropertySet();
+		if (set)
+		{
+			for (auto property : set->childProperties())
+			{
+				property->setDelegateInfo(*elementInfo);
+			}
+		}
+	}
+
+	return newProperty;
 }
 
 void QtnCustomPropertyWidget::addProperty(
@@ -954,9 +974,14 @@ void QtnCustomPropertyWidget::addProperty(
 	}
 
 	if (data.index >= 0)
+	{
 		children.insert(children.begin() + data.index, new_property);
-	else
+		children.at(data.index)->setDelegateInfo(*elementInfo);
+	} else
+	{
 		children.push_back(new_property);
+		children.at(children.size() - 1)->setDelegateInfo(*elementInfo);
+	}
 
 	auto isList = (VarProperty::List == varProperty->GetType());
 

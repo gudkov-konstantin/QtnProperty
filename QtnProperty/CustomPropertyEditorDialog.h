@@ -35,6 +35,8 @@ class QtnPropertyBase;
 class QtnPropertySet;
 class VarProperty;
 
+struct QtnPropertyDelegateInfo;
+
 class QTN_IMPORT_EXPORT CustomPropertyEditorDialog : public QDialog
 {
 	Q_OBJECT
@@ -48,6 +50,7 @@ public:
 	void setReadOnly(bool value);
 	void setPropertyOptionsEnable(bool value);
 	void setPropertyFixedAddType(QMetaType::Type type);
+	void setPropertyDelegateInfo(QtnPropertyDelegateInfo *info);
 
 	virtual void accept() override;
 	virtual void reject() override;

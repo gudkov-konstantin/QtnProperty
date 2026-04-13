@@ -23,6 +23,7 @@ limitations under the License.
 class VarProperty;
 
 struct QtnCustomPropertyData;
+struct QtnPropertyDelegateInfo;
 
 class QTN_IMPORT_EXPORT QtnCustomPropertyWidget : public QtnPropertyWidgetEx
 {
@@ -37,6 +38,7 @@ public:
 	void setData(QVariant *dataPtr, const QString &title = QString(),
 		bool force = false);
 	void setFixedAddType(QMetaType::Type type);
+	void setListElementDelegateInfo(QtnPropertyDelegateInfo *info);
 
 	virtual bool canDeleteProperty(QtnPropertyBase *property) override;
 	virtual bool canCutToClipboard() override;
@@ -89,6 +91,7 @@ private:
 	QVariant *dataPtr;
 	QMetaType::Type lastAddType;
 	QMetaType::Type fixedAddType;
+	QtnPropertyDelegateInfo *elementInfo;
 
 	bool readOnly : 1;
 	bool autoUpdate : 1;

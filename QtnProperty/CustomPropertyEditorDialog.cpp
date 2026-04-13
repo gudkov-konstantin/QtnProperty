@@ -127,6 +127,11 @@ void CustomPropertyEditorDialog::setPropertyFixedAddType(QMetaType::Type type)
 	ui->propertyWidget->setFixedAddType(type);
 }
 
+void CustomPropertyEditorDialog::setPropertyDelegateInfo(QtnPropertyDelegateInfo *info)
+{
+	ui->propertyWidget->setListElementDelegateInfo(info);
+}
+
 void CustomPropertyEditorDialog::accept()
 {
 	qtnStopInplaceEdit(false);
