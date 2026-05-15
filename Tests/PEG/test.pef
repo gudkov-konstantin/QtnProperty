@@ -7,7 +7,7 @@ property_set Test1
 {
     id = 1;
     description = "Test property_set description";
-    state =0 ;
+    state = (QtnPropertyState)0;
     Int a
     {
         id = 2;

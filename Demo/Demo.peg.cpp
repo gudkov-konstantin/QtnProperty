@@ -3,7 +3,6 @@
 #include <QFileDialog>
 #include <QRandomGenerator>
 #include <QDebug>
-
 static QtnEnumInfo& create_COLOR_info()
 {
     QVector<QtnEnumValueInfo> staticValues;

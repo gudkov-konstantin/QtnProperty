@@ -8,6 +8,7 @@
 #include "Freq/PropertyFreq.h"
 
 #include_cpp <QFileDialog>
+#include_cpp <QRandomGenerator>
 #include_cpp <QDebug>
 
 enum COLOR
@@ -64,7 +65,9 @@ property_set SamplePS
 
         clickHandler = [this](const QtnPropertyABColor* color) {
             qDebug() << Q_FUNC_INFO << "Color has clicked: " << color;
-            RGBColor = QColor::fromRgb(qrand()%255, qrand()%255, qrand()%255);
+            RGBColor = QColor::fromRgb(QRandomGenerator::global()->generate() % 255,
+                                       QRandomGenerator::global()->generate() % 255,
+                                       QRandomGenerator::global()->generate() % 255);
         };
 
         delegate { rgbSubItems = true; }
@@ -308,7 +311,7 @@ property_set SamplePS
             delegate File
             {
                 invalidColor = QColor(Qt::blue);
-                fileMode = QFileDialog::DirectoryOnly;
+                fileMode = QFileDialog::Directory;
             }
         }
 
