@@ -61,6 +61,11 @@ QByteArray qtnPlaceholderAttr()
 	return QByteArrayLiteral("placeholder");
 }
 
+QByteArray qtnEchoModeAttr()
+{
+	return QByteArrayLiteral("echo_mode");
+}
+
 QByteArray qtnItemsAttr()
 {
 	return QByteArrayLiteral("items");
@@ -199,6 +204,7 @@ QtnPropertyDelegateQString::QtnPropertyDelegateQString(
 	: QtnPropertyDelegateTyped<QtnPropertyQStringBase>(owner)
 	, m_maxLength(0x1000000)
 	, m_multiline(true)
+	, m_echoMode(QLineEdit::Normal)
 {
 }
 
@@ -215,6 +221,7 @@ void QtnPropertyDelegateQString::applyAttributesImpl(
 	info.loadAttribute(qtnMultiLineEditAttr(), m_multiline);
 	info.loadAttribute(qtnMaxLengthAttr(), m_maxLength);
 	info.loadAttribute(qtnPlaceholderAttr(), m_placeholder);
+	info.loadAttribute(qtnEchoModeAttr(), m_echoMode);
 }
 
 bool QtnPropertyDelegateQString::acceptKeyPressedForInplaceEditImpl(
@@ -238,6 +245,7 @@ QWidget *QtnPropertyDelegateQString::createValueEditorImpl(
 
 		editor->lineEdit->setMaxLength(m_maxLength);
 		editor->lineEdit->setPlaceholderText(m_placeholder);
+		editor->lineEdit->setEchoMode(m_echoMode);
 
 		new QtnPropertyQStringMultilineEditBttnHandler(
 			this, *editor, m_placeholder);
@@ -249,6 +257,7 @@ QWidget *QtnPropertyDelegateQString::createValueEditorImpl(
 	QLineEdit *lineEdit = new QLineEdit(parent);
 	lineEdit->setMaxLength(m_maxLength);
 	lineEdit->setPlaceholderText(m_placeholder);
+	lineEdit->setEchoMode(m_echoMode);
 	lineEdit->setGeometry(rect);
 
 	new QtnPropertyQStringLineEditHandler(this, *lineEdit, m_placeholder);
@@ -268,6 +277,9 @@ bool QtnPropertyDelegateQString::propertyValueToStrImpl(QString &strValue) const
 
 	if (!placeholder.isEmpty())
 		strValue.swap(placeholder);
+
+	if (m_echoMode == QLineEdit::PasswordEchoOnEdit || m_echoMode == QLineEdit::Password)
+		strValue = QCoreApplication::translate("QtnPropertyDelegateQString", "(Password)");
 
 	return true;
 }

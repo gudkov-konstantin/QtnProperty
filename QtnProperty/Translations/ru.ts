@@ -389,6 +389,14 @@ If you press &apos;No&apos;, selected property will be replaced.</source>
     </message>
 </context>
 <context>
+    <name>QtnPropertyDelegateQString</name>
+    <message>
+        <location filename="../Delegates/Core/PropertyDelegateQString.cpp" line="282"/>
+        <source>(Password)</source>
+        <translation>(Пароль)</translation>
+    </message>
+</context>
+<context>
     <name>QtnPropertyEnumFlags</name>
     <message>
         <location filename="../Core/PropertyEnumFlags.cpp" line="114"/>

@@ -21,6 +21,8 @@ limitations under the License.
 #include "QtnProperty/Delegates/Utils/PropertyDelegateMisc.h"
 #include "QtnProperty/Core/PropertyQString.h"
 
+#include <QLineEdit>
+
 class QTN_IMPORT_EXPORT QtnPropertyDelegateQString
 	: public QtnPropertyDelegateTyped<QtnPropertyQStringBase>
 {
@@ -51,6 +53,7 @@ protected:
 	int m_maxLength;
 	bool m_multiline;
 	QString m_placeholder;
+	QLineEdit::EchoMode m_echoMode;
 };
 
 class QTN_IMPORT_EXPORT QtnPropertyDelegateQStringInvalidBase
