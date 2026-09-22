@@ -239,7 +239,7 @@ const QMetaObject *QtnPropertyBase::propertyMetaObject() const
 	return metaObject();
 }
 
-void QtnPropertyBase::setName(const QString &name)
+void QtnPropertyBase::setName(QAnyStringView name)
 {
 	if (objectName() == name)
 		return;
@@ -247,7 +247,7 @@ void QtnPropertyBase::setName(const QString &name)
 	QtnPropertyChangeReason reason(QtnPropertyChangeReasonName);
 	if (m_displayName.isEmpty() && !name.isEmpty())
 	{
-		m_displayName = name;
+		m_displayName = name.toString();
 		reason |= QtnPropertyChangeReasonDisplayName;
 	}
 
@@ -259,7 +259,7 @@ void QtnPropertyBase::setName(const QString &name)
 	emit propertyDidChange(reason);
 }
 
-void QtnPropertyBase::setDisplayName(const QString &displayName)
+void QtnPropertyBase::setDisplayName(QAnyStringView displayName)
 {
 	if (displayName == m_displayName)
 		return;
@@ -267,12 +267,12 @@ void QtnPropertyBase::setDisplayName(const QString &displayName)
 	emit propertyWillChange(QtnPropertyChangeReasonDisplayName,
 		QtnPropertyValuePtr(&displayName), qMetaTypeId<QString>());
 
-	m_displayName = displayName;
+	m_displayName = displayName.toString();
 
 	emit propertyDidChange(QtnPropertyChangeReasonDisplayName);
 }
 
-void QtnPropertyBase::setDescription(const QString &description)
+void QtnPropertyBase::setDescription(QAnyStringView description)
 {
 	if (m_description == description)
 		return;
@@ -280,7 +280,7 @@ void QtnPropertyBase::setDescription(const QString &description)
 	emit propertyWillChange(QtnPropertyChangeReasonDescription,
 		QtnPropertyValuePtr(&description), qMetaTypeId<QString>());
 
-	m_description = description;
+	m_description = description.toString();
 
 	emit propertyDidChange(QtnPropertyChangeReasonDescription);
 }

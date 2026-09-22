@@ -59,13 +59,13 @@ public:
 	virtual const QMetaObject *propertyMetaObject() const;
 
 	inline QString name() const;
-	void setName(const QString &name);
+	void setName(QAnyStringView name);
 
 	inline QString displayName() const;
-	void setDisplayName(const QString &displayName);
+	void setDisplayName(QAnyStringView displayName);
 
 	inline QString description() const;
-	void setDescription(const QString &description);
+	void setDescription(QAnyStringView description);
 
 	inline QtnPropertyID id() const;
 	void setId(QtnPropertyID id);
