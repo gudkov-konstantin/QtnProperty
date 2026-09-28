@@ -696,6 +696,49 @@ If you press &apos;No&apos;, selected property will be replaced.</source>
     </message>
 </context>
 <context>
+    <name>QtnPropertyQMargins</name>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="101"/>
+        <source>left</source>
+        <translation>отступ слева</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="106"/>
+        <source>Left</source>
+        <translation>Отступ слева</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="111"/>
+        <source>top</source>
+        <translation>отступ сверху</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="116"/>
+        <source>Top</source>
+        <translation>Отступ сверху</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="121"/>
+        <source>right</source>
+        <translation>отступ справа</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="126"/>
+        <source>Right</source>
+        <translation>Отступ справа</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="131"/>
+        <source>bottom</source>
+        <translation>отступ снизу</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="136"/>
+        <source>Bottom</source>
+        <translation>Отступ снизу</translation>
+    </message>
+</context>
+<context>
     <name>QtnPropertyQPen</name>
     <message>
         <location filename="../GUI/PropertyQPen.cpp" line="263"/>

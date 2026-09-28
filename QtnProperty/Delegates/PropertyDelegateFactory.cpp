@@ -34,6 +34,8 @@ limitations under the License.
 #include "Core/PropertyDelegateQSizeF.h"
 #include "Core/PropertyDelegateQRect.h"
 #include "Core/PropertyDelegateQRectF.h"
+#include "Core/PropertyDelegateQMargins.h"
+#include "Core/PropertyDelegateQMarginsF.h"
 #include "GUI/PropertyDelegateQColor.h"
 #include "GUI/PropertyDelegateQPen.h"
 #include "GUI/PropertyDelegateQBrush.h"
@@ -242,6 +244,8 @@ void QtnPropertyDelegateFactory::registerDefaultDelegates(
 	QtnPropertyDelegateQSizeF::Register(factory);
 	QtnPropertyDelegateQRect::Register(factory);
 	QtnPropertyDelegateQRectF::Register(factory);
+	QtnPropertyDelegateQMargins::Register(factory);
+	QtnPropertyDelegateQMarginsF::Register(factory);
 	QtnPropertyDelegateGeoCoord::Register(factory);
 	QtnPropertyDelegateGeoPoint::Register(factory);
 	QtnPropertyDelegateQColor::Register(factory);

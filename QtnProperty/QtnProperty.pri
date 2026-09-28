@@ -6,6 +6,10 @@ QT += script
 }
 
 SOURCES +=\
+    $$PWD/Core/PropertyQMargins.cpp \
+    $$PWD/Core/PropertyQMarginsF.cpp \
+    $$PWD/Delegates/Core/PropertyDelegateQMargins.cpp \
+    $$PWD/Delegates/Core/PropertyDelegateQMarginsF.cpp \
     $$PWD/PropertyBase.cpp \
     $$PWD/Property.cpp \
     $$PWD/PropertySet.cpp \
@@ -89,6 +93,10 @@ SOURCES +=\
     $$PWD/Delegates/GUI/PropertyDelegateQVector3D.cpp
 
 HEADERS +=\
+    $$PWD/Core/PropertyQMargins.h \
+    $$PWD/Core/PropertyQMarginsF.h \
+    $$PWD/Delegates/Core/PropertyDelegateQMargins.h \
+    $$PWD/Delegates/Core/PropertyDelegateQMarginsF.h \
     $$PWD/PropertyBase.h \
     $$PWD/Property.h\
     $$PWD/PropertySet.h\

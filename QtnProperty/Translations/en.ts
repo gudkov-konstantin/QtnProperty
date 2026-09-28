@@ -696,6 +696,49 @@ If you press &apos;No&apos;, selected property will be replaced.</translation>
     </message>
 </context>
 <context>
+    <name>QtnPropertyQMargins</name>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="101"/>
+        <source>left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="106"/>
+        <source>Left</source>
+        <translation type="unfinished">Left</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="111"/>
+        <source>top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="116"/>
+        <source>Top</source>
+        <translation type="unfinished">Top</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="121"/>
+        <source>right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="126"/>
+        <source>Right</source>
+        <translation type="unfinished">Right</translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="131"/>
+        <source>bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Core/PropertyQMargins.cpp" line="136"/>
+        <source>Bottom</source>
+        <translation type="unfinished">Bottom</translation>
+    </message>
+</context>
+<context>
     <name>QtnPropertyQPen</name>
     <message>
         <location filename="../GUI/PropertyQPen.cpp" line="263"/>
